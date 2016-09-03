@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -21,7 +22,8 @@ public class UkelonnController {
     TransactionType newJobType;
     double newJobWages;
 
-    public UkelonnController() {
+    @PostConstruct
+    public void init() {
     	transactionTypes = new ArrayList<TransactionType>();
     	transactionTypes.add(new TransactionType(1, "Støvsuging 1. etasje", 45.0, true, false));
     	transactionTypes.add(new TransactionType(2, "Støvsuging kjeller", 45.0, true, false));
@@ -84,29 +86,29 @@ public class UkelonnController {
         return payments;
     }
 
-	public TransactionType getNewJobType() {
-		return newJobType;
-	}
+    public TransactionType getNewJobType() {
+        return newJobType;
+    }
 
-	public void setNewJobType(TransactionType newJobType) {
-		this.newJobType = newJobType;
-	}
-	
-	public void newJobTypeSelected(final AjaxBehaviorEvent event) {
-		if (newJobType != null && newJobType.getTransactionAmount() != null) {
-			newJobWages = newJobType.getTransactionAmount();
-		}
-	}
+    public void setNewJobType(TransactionType newJobType) {
+        this.newJobType = newJobType;
+    }
 
-	public double getNewJobWages() {
-		return newJobWages;
-	}
+    public void newJobTypeSelected(final AjaxBehaviorEvent event) {
+        if (newJobType != null && newJobType.getTransactionAmount() != null) {
+            newJobWages = newJobType.getTransactionAmount();
+        }
+    }
 
-	public void setNewJobWages(double newJobWages) {
-		this.newJobWages = newJobWages;
-	}
-	
-	public void registerNewJob(ActionEvent event) {
-		transactions.add(new Transaction(newJobType, new Date(), newJobWages));
-	}
+    public double getNewJobWages() {
+        return newJobWages;
+    }
+
+    public void setNewJobWages(double newJobWages) {
+        this.newJobWages = newJobWages;
+    }
+
+    public void registerNewJob(ActionEvent event) {
+        transactions.add(new Transaction(newJobType, new Date(), newJobWages));
+    }
 }
