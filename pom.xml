@@ -517,6 +517,7 @@
   <module>ukelonn.tests</module>
   <module>ukelonn.bundle.test.db</module>
   <module>ukelonn.gogoshell</module>
+  <module>ukelonn.target</module>
  </modules>
 
 </project>
