@@ -74,7 +74,6 @@
       <Bundle-Activator>no.steria.osgi.jsr330activator.Jsr330Activator</Bundle-Activator>
       <Bundle-Version>${project.version}</Bundle-Version>
       <Export-Package>!*</Export-Package>
-      <Embed-Dependency>jsr330activator.implementation;inline=true,javax.inject;inline=true,*;scope=runtime,type!=pom</Embed-Dependency>
       <_removeheaders>
        Include-Resource,
        Private-Package,
