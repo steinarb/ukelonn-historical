@@ -40,9 +40,8 @@ import no.steria.osgi.jsr330activator.ServiceProperty;
  *
  */
 @ServiceProperties({
-	@ServiceProperty( name = ExtenderConstants.PROPERTY_ALIAS, value = "/"),
-	@ServiceProperty( name = ExtenderConstants.PROPERTY_SERVLET_NAMES, value = "ukelonn"),
-	@ServiceProperty( name = ExtenderConstants.PROPERTY_HTTP_CONTEXT_PATH, value = "/ukelonn")})
+	@ServiceProperty( name = ExtenderConstants.PROPERTY_URL_PATTERNS, values = {"/ukelonn/*", "/VAADIN/*"}),
+	@ServiceProperty( name = ExtenderConstants.PROPERTY_SERVLET_NAMES, value = "ukelonn")})
 public class UkelonnServletProvider extends UIProvider implements Provider<Servlet>, UkelonnService {
     private static final long serialVersionUID = -275959896126008712L;
     private static UkelonnServletProvider instance;
@@ -88,7 +87,7 @@ public class UkelonnServletProvider extends UIProvider implements Provider<Servl
 
     @Override
     public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
-        throw new UnsupportedOperationException("Not called, this provider creates instances with back pointers.");
+        return UkelonnUI.class;
     }
 
     public static UkelonnServletProvider getInstance() {

@@ -2,10 +2,16 @@ package no.priv.bang.ukelonn.impl;
 
 import java.util.EventListener;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.servlet.Servlet;
+
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
+import org.ops4j.pax.web.extender.whiteboard.ExtenderConstants;
 
 import no.steria.osgi.jsr330activator.Jsr330Activator;
+import no.steria.osgi.jsr330activator.ServiceProperties;
+import no.steria.osgi.jsr330activator.ServiceProperty;
 
 /**
  * This class will be be picked and instantiated up by the {@link Jsr330Activator} and be presented
@@ -25,9 +31,21 @@ import no.steria.osgi.jsr330activator.Jsr330Activator;
  * @author Steinar Bang
  *
  */
+@ServiceProperties({
+	@ServiceProperty( name = ExtenderConstants.PROPERTY_HTTP_CONTEXT_ID, value = "default")})
 public class ShiroEnvironmentLoaderListenerProvider implements Provider<EventListener> {
 
+    private Servlet dependencyServletService;
     private EnvironmentLoaderListener listener;
+
+    @Inject
+    public void setDependencyServletService(Servlet dependencyServletService) {
+        this.dependencyServletService = dependencyServletService;
+    }
+
+    public Servlet getDependencyServletService() {
+        return dependencyServletService;
+    }
 
     @Override
     public EventListener get() {

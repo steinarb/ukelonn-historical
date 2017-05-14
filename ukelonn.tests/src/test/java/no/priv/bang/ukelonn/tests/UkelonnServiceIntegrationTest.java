@@ -59,7 +59,7 @@ public class UkelonnServiceIntegrationTest extends UkelonnServiceIntegrationTest
         return options(
             karafDistributionConfiguration().frameworkUrl(karafUrl).unpackDirectory(new File("target/exam")).useDeployFolder(false).runEmbedded(true),
             configureConsole().ignoreLocalConsole().ignoreRemoteShell(),
-            systemTimeout(60000),
+            systemTimeout(120000),
             logLevel(LogLevel.DEBUG),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", RMI_REG_PORT),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", RMI_SERVER_PORT),
@@ -81,19 +81,18 @@ public class UkelonnServiceIntegrationTest extends UkelonnServiceIntegrationTest
     public void shiroFilterIntegrationTest() {
     	ServiceReference<Filter> servletReference = bundleContext.getServiceReference(Filter.class);
     	String[] servletServicePropertyKeys = servletReference.getPropertyKeys();
-    	assertEquals(7, servletServicePropertyKeys.length);
+    	assertEquals(6, servletServicePropertyKeys.length);
     	String[] actualUrlPatterns = (String[])servletReference.getProperty(ExtenderConstants.PROPERTY_URL_PATTERNS);
-    	assertEquals("/*", actualUrlPatterns[0]);
-    	assertEquals("/ukelonn", servletReference.getProperty(ExtenderConstants.PROPERTY_HTTP_CONTEXT_PATH));
+    	assertEquals("/ukelonn/*", actualUrlPatterns[0]);
     }
 
     @Test
     public void ukelonnServletIntegrationTest() {
     	ServiceReference<Servlet> servletReference = bundleContext.getServiceReference(Servlet.class);
     	String[] servletServicePropertyKeys = servletReference.getPropertyKeys();
-    	assertEquals(7, servletServicePropertyKeys.length);
-    	assertEquals("/", servletReference.getProperty(ExtenderConstants.PROPERTY_ALIAS));
-    	assertEquals("/ukelonn", servletReference.getProperty(ExtenderConstants.PROPERTY_HTTP_CONTEXT_PATH));
+    	assertEquals(6, servletServicePropertyKeys.length);
+    	String[] actualUrlPatterns = (String[])servletReference.getProperty(ExtenderConstants.PROPERTY_URL_PATTERNS);
+    	assertEquals("/ukelonn/*", actualUrlPatterns[0]);
     }
 
     @Test
