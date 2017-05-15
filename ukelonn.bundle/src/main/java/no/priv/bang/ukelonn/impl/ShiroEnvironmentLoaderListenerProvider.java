@@ -8,6 +8,7 @@ import javax.servlet.Servlet;
 
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.ops4j.pax.web.extender.whiteboard.ExtenderConstants;
+import org.osgi.service.http.HttpContext;
 
 import no.steria.osgi.jsr330activator.Jsr330Activator;
 import no.steria.osgi.jsr330activator.ServiceProperties;
@@ -35,16 +36,23 @@ import no.steria.osgi.jsr330activator.ServiceProperty;
 	@ServiceProperty( name = ExtenderConstants.PROPERTY_HTTP_CONTEXT_ID, value = "default")})
 public class ShiroEnvironmentLoaderListenerProvider implements Provider<EventListener> {
 
-    private Servlet dependencyServletService;
+    private HttpContext dependencyHttpContext;
     private EnvironmentLoaderListener listener;
 
+    /***
+     * This injection isn't actually used.  It is just to force
+     * the creation of a HttpContext before the enviroment loader listener
+     * is created.
+     *
+     * @param dependencyHttpContext an OSGi service injection that forces creation order
+     */
     @Inject
-    public void setDependencyServletService(Servlet dependencyServletService) {
-        this.dependencyServletService = dependencyServletService;
+    public void setDependencyHttpContext(HttpContext dependencyHttpContext) {
+        this.dependencyHttpContext = dependencyHttpContext;
     }
 
     public Servlet getDependencyServletService() {
-        return dependencyServletService;
+        return (Servlet) dependencyHttpContext;
     }
 
     @Override
