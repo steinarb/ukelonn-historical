@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import LoginErrorMessage from './LoginErrorMessage';
-import { Button } from 'react-bootstrap';
 
 let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
     if (loginResponse.roles.length > 0) {
@@ -16,14 +15,31 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
     return (
         <div className="Login">
             <h1>Ukelønn login</h1>
-            <form  onSubmit={ e => { e.preventDefault(); }}>
-                <label htmlFor="username">Brukernavn:</label>
-                <input id="username" type='text' name='username' onChange={(event) => onFieldChange({ username: event.target.value })}></input><br/>
-                <label htmlFor="password">Passord:</label>
-                <input id="password" type='password' name='password' onChange={(event) => onFieldChange({ password: event.target.value })}/><br/>
-                <Button onClick={() => onLogin(username, password)}>Login</Button>
+            <form className="form-horizontal" onSubmit={ e => { e.preventDefault(); }}>
+                <div className="form-group">
+                    <label htmlFor="username" className="col-sm-2 control-label">Brukernavn:</label>
+                    <div className="col-sm-10">
+                        <input id="username" className="form-control" type='text' name='username' onChange={(event) => onFieldChange({ username: event.target.value })}></input>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password" className="col-sm-2 control-label">Passord:</label>
+                    <div className="col-sm-10">
+                        <input id="password" className="form-control" type='password' name='password' onChange={(event) => onFieldChange({ password: event.target.value })}/>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-sm-offset col-sm-10">
+                        <button className="btn btn-default" onClick={() => onLogin(username, password)}>Login</button>
+                    </div>
+                </div>
             </form>
-            <LoginErrorMessage loginResponse={loginResponse} />
+            <div className="container">
+                <div className="row">
+                    <LoginErrorMessage loginResponse={loginResponse} />
+                </div>
+            </div>
+
         </div>
     );
 };

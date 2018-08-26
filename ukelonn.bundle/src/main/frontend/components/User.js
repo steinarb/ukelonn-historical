@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import Jobtypes from './Jobtypes';
-import { Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 
 class User extends Component {
     constructor(props) {
@@ -28,21 +27,63 @@ class User extends Component {
 
         return (
             <div>
-                <h1>Ukelønn for {account.firstName}</h1>
-                <div>Til gode: { account.balance }</div><br/>
-                <form onSubmit={ e => { e.preventDefault(); }}>
-                    <label htmlFor="jobtype">Velg jobb</label>
-                    <Jobtypes id="jobtype" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                <header>
+                    <div className="container clearfix">
+                        <h1 id="logo">Ukelønn for {account.firstName}</h1>
+                    </div>
+                </header>
+                <div className="container-fluid">
+                    <div className="container">
+                        <div className="row border">
+                            <div className="col">
+                                <label>Til gode:</label>
+                            </div>
+                            <div className="col">
+                                { account.balance }
+                            </div>
+                        </div>
+                    </div>
+                    <form className="form-horizontal" onSubmit={ e => { e.preventDefault(); }}>
+                        <div className="form-group">
+                            <label htmlFor="jobtype" className="col-sm-2 control-label">Velg jobb</label>
+                            <div className="col-sm-10">
+                                <Jobtypes id="jobtype" className="form-control" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="amount" className="col-sm-2 control-label">Beløp</label>
+                            <div className="col-sm-10">
+                                <input id="amount" className="form-control" type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <div className="col-sm-offset col-sm-10">
+                                <button className="btn btn-default" onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div className="container">
+                        <div className="row border">
+                            <div className="col">
+                                &nbsp;
+                            </div>
+                            <div className="col-xs">
+                                <Link to="/ukelonn/performedjobs">Utforte jobber</Link>
+                            </div>
+                        </div>
+                        <div className="row border">
+                            <div className="col">
+                                &nbsp;
+                            </div>
+                            <div className="col-xs">
+                                <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link>
+                            </div>
+                        </div>
+                    </div>
                     <br/>
-                    <label htmlFor="amount">Beløp</label>
-                    <input id="amount" type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
-                    <Button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</Button>
-                </form>
-                <br/>
-                <LinkContainer to="/ukelonn/performedjobs"><Button>Utførte jobber</Button></LinkContainer><br/>
-                <LinkContainer to="/ukelonn/performedpayments"><Button>Siste utbetalinger til bruker</Button></LinkContainer><br/>
-                <br/>
-                <Button onClick={() => onLogout()}>Logout</Button>
+                    <br/>
+                    <button onClick={() => onLogout()}>Logout</button>
+                </div>
             </div>
         );
     }
