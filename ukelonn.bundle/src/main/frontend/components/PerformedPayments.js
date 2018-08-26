@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class PerformedPayments extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class PerformedPayments extends Component {
 
         return (
             <div>
-                <Link to="/ukelonn/">Register betaling</Link>
+                <LinkContainer to="/ukelonn/"><Button>Register betaling</Button></LinkContainer><br/>
                 <br/>
                 <h1>Utførte jobber for {account.firstName}</h1>
                 <table className="table table-bordered">

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 import Jobtypes from './Jobtypes';
+import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class User extends Component {
     constructor(props) {
@@ -35,13 +36,13 @@ class User extends Component {
                     <br/>
                     <label htmlFor="amount">Beløp</label>
                     <input id="amount" type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
-                    <button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
+                    <Button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</Button>
                 </form>
                 <br/>
-                <Link to="/ukelonn/performedjobs">Utforte jobber</Link><br/>
-                <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link><br/>
+                <LinkContainer to="/ukelonn/performedjobs"><Button>Utførte jobber</Button></LinkContainer><br/>
+                <LinkContainer to="/ukelonn/performedpayments"><Button>Siste utbetalinger til bruker</Button></LinkContainer><br/>
                 <br/>
-                <button onClick={() => onLogout()}>Logout</button>
+                <Button onClick={() => onLogout()}>Logout</Button>
             </div>
         );
     }

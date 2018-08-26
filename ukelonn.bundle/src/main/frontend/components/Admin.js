@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 import Accounts from './Accounts';
 import Paymenttypes from './Paymenttypes';
 import Amount from './Amount';
+import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Admin extends Component {
     constructor(props) {
@@ -58,16 +59,16 @@ class Admin extends Component {
                     <Amount id="amount" payment={payment} onAmountFieldChange={onAmountFieldChange} />
                     <br/>
                     <br/>
-                    <button onClick={() => onRegisterPayment(payment)}>Registrer betaling</button>
+                    <Button onClick={() => onRegisterPayment(payment)}>Registrer betaling</Button>
                 </form>
                 <br/>
-                <Link to="/ukelonn/performedjobs">Utforte jobber</Link><br/>
-                <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link><br/>
-                <Link to="/ukelonn/admin/jobtypes">Administrere jobbtyper</Link><br/>
-                <Link to="/ukelonn/admin/paymenttypes">Administrere utbetalingstyper</Link><br/>
-                <Link to="/ukelonn/admin/users">Administrere brukere</Link><br/>
+                <LinkContainer to="/ukelonn/performedjobs"><Button>Utforte jobber</Button></LinkContainer><br/>
+                <LinkContainer to="/ukelonn/performedpayments"><Button>Siste utbetalinger til bruker</Button></LinkContainer><br/>
+                <LinkContainer to="/ukelonn/admin/jobtypes"><Button>Administrere jobbtyper</Button></LinkContainer><br/>
+                <LinkContainer to="/ukelonn/admin/paymenttypes"><Button>Administrere utbetalingstyper</Button></LinkContainer><br/>
+                <LinkContainer to="/ukelonn/admin/users"><Button>Administrere brukere</Button></LinkContainer><br/>
                 <br/>
-                <button onClick={() => onLogout()}>Logout</button>
+                <Button onClick={() => onLogout()}>Logout</Button>
             </div>
         );
     };

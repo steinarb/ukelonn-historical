@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import LoginErrorMessage from './LoginErrorMessage';
+import { Button } from 'react-bootstrap';
 
 let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
     if (loginResponse.roles.length > 0) {
@@ -20,7 +21,7 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
                 <input id="username" type='text' name='username' onChange={(event) => onFieldChange({ username: event.target.value })}></input><br/>
                 <label htmlFor="password">Passord:</label>
                 <input id="password" type='password' name='password' onChange={(event) => onFieldChange({ password: event.target.value })}/><br/>
-                <button onClick={() => onLogin(username, password)}>Login</button>
+                <Button onClick={() => onLogin(username, password)}>Login</Button>
             </form>
             <LoginErrorMessage loginResponse={loginResponse} />
         </div>
