@@ -63,6 +63,9 @@ public class JobResource extends ResourceBase {
     @Consumes(MediaType.APPLICATION_JSON)
     public List<Transaction> doUpdateJob(UpdatedTransaction editedJob) {
         try {
+            if (editedJob.getTransactionTime() != null) {
+                System.err.println(String.format("JobResource.doUpdateJob(1):  editedJob.getTransactionTypeId(): %d  editedJob.getTransactionAmount(): %f  editedJob.getTransactionAmount(): %d", editedJob.getTransactionTypeId(), editedJob.getTransactionAmount(), editedJob.getTransactionTime().getTime()));
+            }
             return ukelonn.updateJob(editedJob);
         } catch (UkelonnException e) {
             logservice.log(LogService.LOG_ERROR, "REST endpoint /api/job/update failed", e);
