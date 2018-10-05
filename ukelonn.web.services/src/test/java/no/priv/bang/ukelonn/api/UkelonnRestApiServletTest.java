@@ -1211,6 +1211,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
             Transaction job = getUkelonnServiceSingleton().getJobs(account.getAccountId()).get(0);
             Integer originalTransactionTypeId = job.getTransactionType().getId();
             double originalTransactionAmount = job.getTransactionAmount();
+            System.err.println(String.format("testUpdateJob(1)  originalTransactionTypeId: %d  originalTransactionAmount: %f  job.getTransactionTime(): %d", originalTransactionTypeId, originalTransactionAmount, job.getTransactionTime().getTime()));
 
             // Find a different job type that has a different amount than the
             // job's original type
@@ -1219,6 +1220,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
             // Create a new job object with a different jobtype and the same id
             Date now = new Date();
             UpdatedTransaction editedJob = new UpdatedTransaction(job.getId(), account.getAccountId(), newJobType.getId(), now, newJobType.getTransactionAmount());
+            System.err.println(String.format("testUpdateJob(2)  newJobType.getId(): %d  newJobType.getTransactionAmount(): %f  now: %d", newJobType.getId(), newJobType.getTransactionAmount(), now.getTime()));
 
             // Build the HTTP request
             String editedJobAsJson = ServletTestBase.mapper.writeValueAsString(editedJob);
@@ -1257,9 +1259,10 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
             assertEquals("application/json", response.getContentType());
             List<Transaction> updatedJobs = mapper.readValue(response.getOutput().toByteArray(), new TypeReference<List<Transaction>>() { });
             Transaction editedJobFromDatabase = updatedJobs.stream().filter(t->t.getId() == job.getId()).collect(Collectors.toList()).get(0);
+            System.err.println(String.format("testUpdateJob(3)  editedJobFromDatabase.getTransactionType.getId(): %d  editedJobFromDatabase.getTransactionAmount(): %f  editedJobFromDatabase.getTransactionTime(): %d", editedJobFromDatabase.getTransactionType().getId(), editedJobFromDatabase.getTransactionAmount(), editedJobFromDatabase.getTransactionTime().getTime()));
 
             assertEquals(editedJob.getTransactionTypeId(), editedJobFromDatabase.getTransactionType().getId().intValue());
-            //assertThat(editedJobFromDatabase.getTransactionTime().getTime()).isGreaterThan(job.getTransactionTime().getTime());
+            assertThat(editedJobFromDatabase.getTransactionTime().getTime()).isGreaterThan(job.getTransactionTime().getTime());
             assertEquals(editedJob.getTransactionAmount(), editedJobFromDatabase.getTransactionAmount(), 0.0);
         } finally {
             restoreTestDatabase();
