@@ -271,6 +271,7 @@ public class JobResourceTest extends ServletTestBase {
             List<Transaction> updatedJobs = resource.doUpdateJob(editedJob);
 
             Transaction editedJobFromDatabase = updatedJobs.stream().filter(t->t.getId() == job.getId()).collect(Collectors.toList()).get(0);
+            System.err.println(String.format("testUpdateJob(1)  editedJobFromDatabase.getTransactionType.getId(): %d  editedJobFromDatabase.getTransactionAmount(): %f  editedJobFromDatabase.getTransactionTime(): %d", editedJobFromDatabase.getTransactionType().getId(), editedJobFromDatabase.getTransactionAmount(), editedJobFromDatabase.getTransactionTime().getTime()));
 
             assertEquals(editedJob.getTransactionTypeId(), editedJobFromDatabase.getTransactionType().getId().intValue());
             assertThat(editedJobFromDatabase.getTransactionTime().getTime()).isGreaterThan(originalTransactionTime.getTime());
