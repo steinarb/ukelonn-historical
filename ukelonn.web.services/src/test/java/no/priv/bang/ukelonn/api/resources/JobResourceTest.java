@@ -260,6 +260,7 @@ public class JobResourceTest extends ServletTestBase {
             Integer originalTransactionTypeId = job.getTransactionType().getId();
             Date originalTransactionTime = job.getTransactionTime();
             double originalTransactionAmount = job.getTransactionAmount();
+            System.err.println(String.format("JobResourceTest.testUpdateJob(1)  originalTransactionTypeId: %d  originalTransactionAmount: %f  job.getTransactionTime(): %d", originalTransactionTypeId, originalTransactionAmount, job.getTransactionTime().getTime()));
 
             // Find a different job type that has a different amount
             TransactionType newJobType = findJobTypeWithDifferentIdAndAmount(ukelonn, originalTransactionTypeId, originalTransactionAmount);
@@ -267,11 +268,12 @@ public class JobResourceTest extends ServletTestBase {
             // Create a new job object with a different jobtype and the same id
             Date now = new Date();
             UpdatedTransaction editedJob = new UpdatedTransaction(jobId, account.getAccountId(), newJobType.getId(), now, newJobType.getTransactionAmount());
+            System.err.println(String.format("JobResourceTest.testUpdateJob(2)  newJobType.getId(): %d  newJobType.getTransactionAmount(): %f  now: %d", newJobType.getId(), newJobType.getTransactionAmount(), now.getTime()));
 
             List<Transaction> updatedJobs = resource.doUpdateJob(editedJob);
 
             Transaction editedJobFromDatabase = updatedJobs.stream().filter(t->t.getId() == job.getId()).collect(Collectors.toList()).get(0);
-            System.err.println(String.format("testUpdateJob(1)  editedJobFromDatabase.getTransactionType.getId(): %d  editedJobFromDatabase.getTransactionAmount(): %f  editedJobFromDatabase.getTransactionTime(): %d", editedJobFromDatabase.getTransactionType().getId(), editedJobFromDatabase.getTransactionAmount(), editedJobFromDatabase.getTransactionTime().getTime()));
+            System.err.println(String.format("JobResourceTest.testUpdateJob(3)  editedJobFromDatabase.getTransactionType.getId(): %d  editedJobFromDatabase.getTransactionAmount(): %f  editedJobFromDatabase.getTransactionTime(): %d", editedJobFromDatabase.getTransactionType().getId(), editedJobFromDatabase.getTransactionAmount(), editedJobFromDatabase.getTransactionTime().getTime()));
 
             assertEquals(editedJob.getTransactionTypeId(), editedJobFromDatabase.getTransactionType().getId().intValue());
             assertThat(editedJobFromDatabase.getTransactionTime().getTime()).isGreaterThan(originalTransactionTime.getTime());
